@@ -1,4 +1,4 @@
-import 'package:demo_project/shared/components/components.dart';
+import 'package:demo_project/shared/constants/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 
@@ -9,7 +9,7 @@ class PhoneVerificationProvider extends ChangeNotifier{
 
    Future<void> sendVerificationCode() async{
      final response = await http.post(
-      Uri.parse(AppUrl.sendVerificationCode),
+      Uri.parse(Environment.sendVerificationCode),
       body: {
         'phoneNumber': phoneNumber,
         },
@@ -27,7 +27,7 @@ class PhoneVerificationProvider extends ChangeNotifier{
    
   Future<void> verifyCode() async {
     final response = await http.post(
-      Uri.parse(AppUrl.sendVerificationCode),
+      Uri.parse(Environment.sendVerificationCode),
       body: {
         'phoneNumber': phoneNumber,
         'verificationCode': verificationCode,

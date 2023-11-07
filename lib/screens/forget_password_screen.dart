@@ -26,7 +26,7 @@ class ForgotPasswordScreen extends StatelessWidget{
           ),
       ),
       body:Consumer<PhoneVerificationProvider>(
-        builder: (context, PhoneVerificationProvider, child) =>SingleChildScrollView(
+        builder: (context, phoneVerificationProvider, child) =>SingleChildScrollView(
           child: Column(
             children:[
               Padding(
@@ -69,7 +69,7 @@ class ForgotPasswordScreen extends StatelessWidget{
                        showFlag:false,
                        alignLeft: true,
                        initialSelection: selectedCode,
-                       closeIcon: Icon(Icons.backspace_sharp,color: Colors.grey,),
+                       closeIcon:const Icon(Icons.backspace_sharp,color: Colors.grey,),
                         
                  ),
                 ),
@@ -79,7 +79,7 @@ class ForgotPasswordScreen extends StatelessWidget{
                     keyboardType: TextInputType.phone,
                     controller:phoneController,
                     onChanged: (value) {
-                     PhoneVerificationProvider.phoneNumber = value;
+                     phoneVerificationProvider.phoneNumber = value;
                       },
                     validator: (value){
                       if (value == null || value.isEmpty){
@@ -107,7 +107,8 @@ class ForgotPasswordScreen extends StatelessWidget{
               child: ElevatedButton(
                onPressed: ()async{
                   if(formkey.currentState!.validate()){
-                    await PhoneVerificationProvider.sendVerificationCode();
+                    await phoneVerificationProvider.sendVerificationCode();
+                     // ignore: use_build_context_synchronously
                      navigateTo(context, CodeScreen(
                       phoneNumber: phoneController.text,
                       ),
@@ -124,7 +125,7 @@ class ForgotPasswordScreen extends StatelessWidget{
                     ),
                    style:ElevatedButton.styleFrom(
                       shape:const BeveledRectangleBorder(),
-                       primary: Colors.grey[200],
+                       backgroundColor: Colors.grey[200],
                      ),
                    ),
                  ),

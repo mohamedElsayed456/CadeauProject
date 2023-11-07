@@ -1,6 +1,7 @@
 import 'package:demo_project/providers/login_provider.dart';
 import 'package:demo_project/providers/occasions_provider.dart';
 import 'package:demo_project/providers/phone_verification_provider.dart';
+import 'package:demo_project/providers/products_details_provider.dart';
 import 'package:demo_project/providers/products_provider.dart';
 import 'package:demo_project/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,9 @@ class MyApp extends StatelessWidget{
         ChangeNotifierProvider(create: (_)=>PhoneVerificationProvider()),
         ChangeNotifierProvider(create: (_)=>OccasionsProvider()),
         ChangeNotifierProvider(create: (_)=>ProductsProvider()),
+        ChangeNotifierProvider(create: (_)=>ProductsDetailsProvider()),
       ],
-      builder: (context, child){
+      builder: (context,child){
         
         return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget{
         theme: ThemeData(
           
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          useMaterial3:true,
         ),
        home: ChangeNotifierProvider(
           create: (context) => LoginProvider(),

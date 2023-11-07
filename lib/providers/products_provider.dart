@@ -6,9 +6,10 @@ import 'package:http/http.dart'as http;
 class ProductsProvider extends ChangeNotifier{
   bool isloading = true;
   String error='';
+  
   ProductsModel product=ProductsModel(
     message: 'message',
-     data: Data(products: []),
+     data:Data(products: []),
       extra:Extra.fromJson({}),
       );
 
@@ -22,11 +23,9 @@ class ProductsProvider extends ChangeNotifier{
         }
       );
    if(response.statusCode==200){
-       print('mohamed');
        product = productsFromJson(response.body);
       }
       else{
-        print('Elsayed');
         error=response.statusCode.toString();
       }
     }catch(e){

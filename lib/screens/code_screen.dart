@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class CodeScreen extends StatefulWidget {
-   CodeScreen({
+  const CodeScreen({
     super.key,required this.phoneNumber,
     });
   final String phoneNumber;
@@ -48,11 +48,6 @@ class _CodeScreenState extends State<CodeScreen> {
         countdownTimer.cancel();
       }
      });
-     startTimer(){
-      if(countdownTimer.isActive){
-
-      }
-     }
   }
 
   @override
@@ -96,7 +91,7 @@ class _CodeScreenState extends State<CodeScreen> {
           ),
           const SizedBox(height: 20,),
             Text(
-              '${widget.phoneNumber}',
+              widget.phoneNumber,
             style:const TextStyle(
             fontSize:22,
             fontWeight: FontWeight.bold,
@@ -134,7 +129,7 @@ class _CodeScreenState extends State<CodeScreen> {
                 onPressed: (){ 
                 // final otp = txt1.text+txt2.text+txt3.text+txt4.text+txt5.text+txt6.text;
 
-                  navigateTo(context,NewPasswordScreen());
+                  navigateTo(context,const NewPasswordScreen());
            
                },
               // ignore: sort_child_properties_last
@@ -148,7 +143,7 @@ class _CodeScreenState extends State<CodeScreen> {
                 style:ElevatedButton.styleFrom(
                   shape:const BeveledRectangleBorder(),
                    // primary: loginProvider.isPhoneEnabled ? Colors.blue : Colors.grey[200],
-                   primary:  Colors.grey[200],
+                   backgroundColor:  Colors.grey[200],
                   ),
                 ),
               ),

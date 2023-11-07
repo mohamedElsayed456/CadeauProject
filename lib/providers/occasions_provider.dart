@@ -6,11 +6,16 @@ import 'package:http/http.dart';
 class OccasionsProvider extends ChangeNotifier{
   bool isloading=true;
   String error='';
+
   OccasionsModel model = OccasionsModel(
     message: '',
     data: Data(occasionTypes:[]),
     extra: Extra.fromJson({}),
     );
+    OccasionsModel get selectedOccasion => model;
+    
+    
+
   static const occasionUrl='http://3.65.222.77/api/v1/lookups/occasion_types';
 
     getoccasiondata()async{

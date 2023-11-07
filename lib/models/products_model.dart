@@ -52,13 +52,13 @@ class Product {
     int? id;
     String name;
     AvailableStatusEnum status;
-    int? price;
-    int? priceAfterDiscount;
+    double? price;
+    double? priceAfterDiscount;
     Currency currency;
     bool? isVisible;
     bool? isWrappable;
     bool? inStock;
-    int? avgRate;
+    double? avgRate;
     int? reviewsCount;
     dynamic dynamicLink;
     String? targetAge;
@@ -66,7 +66,6 @@ class Product {
     int? defaultVariantId;
     String image;
     int? masterVariantId;
-    AvailableStatusEnum availableStatus;
     bool? productStatus;
     Store store;
     bool? isFavouritedByCurrentUser;
@@ -90,7 +89,6 @@ class Product {
         required this.defaultVariantId,
         required this.image,
         required this.masterVariantId,
-        required this.availableStatus,
         required this.productStatus,
         required this.store,
         required this.isFavouritedByCurrentUser,
@@ -115,7 +113,6 @@ class Product {
         defaultVariantId: json["default_variant_id"],
         image: json["image"],
         masterVariantId: json["master_variant_id"],
-        availableStatus: availableStatusEnumValues.map[json["available_status"]]!,
         productStatus: json["product_status"],
         store: Store.fromJson(json["store"]),
         isFavouritedByCurrentUser: json["is_favourited_by_current_user"],
@@ -140,7 +137,6 @@ class Product {
         "default_variant_id": defaultVariantId,
         "image": image,
         "master_variant_id": masterVariantId,
-        "available_status": availableStatusEnumValues.reverse[availableStatus],
         "product_status": productStatus,
         "store": store.toJson(),
         "is_favourited_by_current_user": isFavouritedByCurrentUser,
@@ -149,6 +145,7 @@ class Product {
 }
 
 enum AvailableStatusEnum {
+    // ignore: constant_identifier_names
     AVAILABLE
 }
 
@@ -181,6 +178,7 @@ class Currency {
 }
 
 enum LookupKey {
+    // ignore: constant_identifier_names
     SAR
 }
 

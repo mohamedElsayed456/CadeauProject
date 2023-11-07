@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class NewPasswordScreen extends StatefulWidget {
-   NewPasswordScreen({super.key});
+  const NewPasswordScreen({super.key});
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
@@ -101,7 +101,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 style:ElevatedButton.styleFrom(
                   shape:const BeveledRectangleBorder(),
                    // primary: loginProvider.isPhoneEnabled ? Colors.blue : Colors.grey[200],
-                   primary:  Colors.grey[200],
+                   backgroundColor:  Colors.grey[200],
                   ),
                 ),
               ),
