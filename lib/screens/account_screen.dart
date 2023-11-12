@@ -1,37 +1,63 @@
-import 'package:demo_project/screens/login_screen.dart';
+import 'package:demo_project/providers/logout_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AccountScreen extends StatelessWidget{
+class AccountScreen extends StatefulWidget{
   const AccountScreen({super.key});
+
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen>{
+
+  late final logoutProvider = context.read<LogoutProvider>();
 
 @override
   Widget build(BuildContext context){
+    
     return Scaffold(
       appBar:AppBar(
         title:const Text('Account',style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions:const[
-              Padding(
-                 padding: EdgeInsets.all(10.0),
-                 child: Icon(Icons.notifications_none),
-               ),
-              ],
+          Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(Icons.notifications_none),
+            ),
+          ],
         ),
       body:Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: InkWell(
-           onTap:(){
-               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>const LoginScreen()));
-           } ,
+           onTap:()async{
+            await logout(context);
+           },
           child:const Row(
-            children:[
-              Icon(Icons.logout_outlined,size: 30,),
-              SizedBox(width: 10),
-              Text('Log Out',style:TextStyle(fontSize: 20,fontWeight: FontWeight.w500,))
-            ],
+          children:[
+            Icon(Icons.logout_outlined,size: 30,),
+            SizedBox(width: 10),
+            Text('Log Out',style:TextStyle(fontSize: 20,fontWeight: FontWeight.w500,))
+          ],
           ),
         ),
       ),
     );
   }
+
+  Future<void> logout(BuildContext context) async {
+    // Clear user authentication state (using shared_preferences for example)
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    // Navigate to the login screen
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacementNamed(context, '/login');
+  }
 }
+
+
+
+
+

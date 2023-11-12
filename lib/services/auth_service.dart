@@ -5,6 +5,7 @@ import 'package:demo_project/shared/constants/environment.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
+
   Future<http.Response> login({
     required String code,
     required String phoneNumber,
@@ -33,8 +34,27 @@ class AuthServices {
     );
     log(body.toString(),name: "LOGIN-BODY");
     log(response.body,name: "LOGIN-RESPONSE-BODY");
-    
-    return response;
+     return response;
+    }
 
-  }
-}
+    
+
+   // Logout service
+   Future<http.Response> logout() async {
+    Map<String, String>? headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Accept-Language": 'en',
+    };
+    final http.Response response = await http.delete(
+        Uri.parse('${Environment.baseUrl}${Endpoints.logout}'),
+        headers: headers,
+        );
+        // ignore: avoid_print
+        print('response ${response.body}');
+        return response;
+        // print(response);
+     }
+  }   
+    
+

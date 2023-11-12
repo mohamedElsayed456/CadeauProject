@@ -107,7 +107,6 @@ class ForgotPasswordScreen extends StatelessWidget{
               child: ElevatedButton(
                onPressed: ()async{
                   if(formkey.currentState!.validate()){
-                    await phoneVerificationProvider.sendVerificationCode();
                      // ignore: use_build_context_synchronously
                      navigateTo(context, CodeScreen(
                       phoneNumber: phoneController.text,
@@ -116,17 +115,17 @@ class ForgotPasswordScreen extends StatelessWidget{
                      
                  }
                 },
-                  child:Text(
+                   style:ElevatedButton.styleFrom(
+                      shape:const BeveledRectangleBorder(),
+                       backgroundColor: Colors.grey[200],
+                     ),
+                  child:const Text(
                     'Next',
                       style:TextStyle(
                        color: Colors.white,
                         fontSize: 18,
                       ),
                     ),
-                   style:ElevatedButton.styleFrom(
-                      shape:const BeveledRectangleBorder(),
-                       backgroundColor: Colors.grey[200],
-                     ),
                    ),
                  ),
                 ],

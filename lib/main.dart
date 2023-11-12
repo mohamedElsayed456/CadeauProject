@@ -1,4 +1,5 @@
 import 'package:demo_project/providers/login_provider.dart';
+import 'package:demo_project/providers/logout_provider.dart';
 import 'package:demo_project/providers/occasions_provider.dart';
 import 'package:demo_project/providers/phone_verification_provider.dart';
 import 'package:demo_project/providers/products_details_provider.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget{
         ChangeNotifierProvider(create: (_)=>OccasionsProvider()),
         ChangeNotifierProvider(create: (_)=>ProductsProvider()),
         ChangeNotifierProvider(create: (_)=>ProductsDetailsProvider()),
+        ChangeNotifierProvider(create: (_)=>LogoutProvider()),
+
       ],
       builder: (context,child){
         

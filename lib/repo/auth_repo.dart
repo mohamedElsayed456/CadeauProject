@@ -22,4 +22,18 @@ class AuthRepo {
       return false;
     }
   }
+
+
+  //Logout repo
+   Future<bool> logout()async{
+    final response=await authService.logout();
+    if(response.statusCode==200){
+        // ignore: unused_local_variable
+        final Map<String,dynamic>extractedData = jsonDecode(response.body);
+        return true;
+    }
+    else{
+      return false;
+    }
+  }
 }

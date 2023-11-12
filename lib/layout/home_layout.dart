@@ -10,7 +10,7 @@ class HomeLayoutScreen extends StatelessWidget {
    HomeLayoutScreen({super.key});
 
   List<Widget>bottomscreens=[
-      OccasionScreen(model:const [],),
+      const OccasionScreen(),
       const AccountScreen(),
   ];
   

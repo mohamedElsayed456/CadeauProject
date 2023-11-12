@@ -19,23 +19,12 @@ class CodeScreen extends StatefulWidget {
 
 class _CodeScreenState extends State<CodeScreen> {
   int resendtime=60;
-
   late Timer countdownTimer;
 
-  TextEditingController txt1=TextEditingController();
-
-  TextEditingController txt2=TextEditingController();
-
-  TextEditingController txt3=TextEditingController();
-
-  TextEditingController txt4=TextEditingController();
-
-  TextEditingController txt5=TextEditingController();
-
-  TextEditingController txt6=TextEditingController();
+  
 
   @override
-  void initState() {
+  void initState(){
     startTimer();
     super.initState();
   }
@@ -99,18 +88,15 @@ class _CodeScreenState extends State<CodeScreen> {
               ),
               textAlign: TextAlign.center,
               ),
-           const SizedBox(height: 40,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:[
-               myInputBox(txt1, context),
-               myInputBox(txt2, context),
-               myInputBox(txt3, context),
-               myInputBox(txt4, context),
-               myInputBox(txt5, context),
-               myInputBox(txt6, context),
-            ]
-           ),
+              
+               
+                  
+  
+   
+
+
+
+
            const SizedBox(height: 20,),
                resendtime==0? InkWell(
                 child: Text('Resend code', style:TextStyle(

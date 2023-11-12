@@ -8,6 +8,14 @@ class LoginProvider with ChangeNotifier {
     _isloading = val;
     notifyListeners();
   }
+ 
+   bool _isObscure = true;
+   bool get isObscure => _isObscure;
+   void togglePasswordVisibility() {
+    _isObscure = !_isObscure;
+    notifyListeners();
+  }
+
 
   String code = '';
   String phoneNumber = '';

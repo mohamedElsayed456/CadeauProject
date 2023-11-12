@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   final formkey = GlobalKey<FormState>();
-  bool _obsecuretext = true;
   String? _password;
   late final loginProvider = context.read<LoginProvider>();
 
@@ -125,39 +124,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
       
                       //Enter your text here
-                      TextFormField(
-                        controller: passwordController,
-                        onChanged: loginProvider.updatePassword,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter password';
-                          }
-                          return null;
-                        },
-                        onSaved: (value){
-                          value = _password;
-                        },
-                        decoration: InputDecoration(
-                            hintText: 'Enter your passsword here',
-                            hintStyle: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w300),
-                            suffixIcon: GestureDetector(
-                              onTap: (){
-                                setState((){
-                                  _obsecuretext = !_obsecuretext;
-                                });
-                              },
-                              child: Icon(
-                                _obsecuretext
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Colors.grey[400],
+                      Selector<LoginProvider,bool>(
+                       selector: (context, provider) =>provider.isObscure,
+                       builder: (context, isObscure, child) =>TextFormField(
+                          controller: passwordController,
+                          onChanged: loginProvider.updatePassword,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter password';
+                            }
+                            return null;
+                          },
+                          onSaved: (value){
+                            value = _password;
+                          },
+                          obscureText: isObscure,
+                          decoration: InputDecoration(
+                              hintText: 'Enter your passsword here',
+                              hintStyle: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w300),
+                                 suffixIcon: IconButton(
+                                      icon: isObscure ?const Icon(Icons.visibility_off) :const Icon(Icons.visibility),
+                                      color: Colors.grey[400],
+                                      onPressed: () {
+                                        Provider.of<LoginProvider>(context, listen: false).togglePasswordVisibility();
+                                      },
+                                    ),
                               ),
-                             ),
-                            ),
-                        obscureText: _obsecuretext,
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
