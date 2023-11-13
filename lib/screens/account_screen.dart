@@ -1,6 +1,4 @@
-import 'package:demo_project/providers/logout_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget{
@@ -11,8 +9,6 @@ class AccountScreen extends StatefulWidget{
 }
 
 class _AccountScreenState extends State<AccountScreen>{
-
-  late final logoutProvider = context.read<LogoutProvider>();
 
 @override
   Widget build(BuildContext context){

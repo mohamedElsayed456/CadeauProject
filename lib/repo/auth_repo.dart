@@ -36,4 +36,20 @@ class AuthRepo {
       return false;
     }
   }
+
+ 
+  Future<bool> verifyOtpRepo ({required String otp})async{
+    
+   final response=await authService.verifyOtpServices(verificationCode:otp);
+   if(response.statusCode==200){
+    // ignore: unused_local_variable
+    final Map<String,dynamic>extractedData=jsonDecode(response.body);
+    return true;
+
+   }
+   else{
+    return false;
+    }
+    
+  }
 }

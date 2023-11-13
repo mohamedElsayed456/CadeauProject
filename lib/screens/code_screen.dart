@@ -1,10 +1,9 @@
 import 'dart:async';
-
-import 'package:demo_project/providers/login_provider.dart';
 import 'package:demo_project/screens/new_password_screen.dart';
 import 'package:demo_project/shared/components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+
 
 // ignore: must_be_immutable
 class CodeScreen extends StatefulWidget {
@@ -20,8 +19,7 @@ class CodeScreen extends StatefulWidget {
 class _CodeScreenState extends State<CodeScreen> {
   int resendtime=60;
   late Timer countdownTimer;
-
-  
+  final TextEditingController pinController = TextEditingController();
 
   @override
   void initState(){
@@ -50,11 +48,9 @@ class _CodeScreenState extends State<CodeScreen> {
           icon:const Icon(Icons.arrow_back_ios,size: 20,)
           ),
       ),
-  body:Consumer<LoginProvider>(
-     builder: (context, loginProvider, child) =>SingleChildScrollView(
-       child: Center(
+      body:Center(
         child: Padding(
-         padding: const EdgeInsets.all(15.0),
+         padding: const EdgeInsets.symmetric(horizontal: 25.0),
          child: Column(
          children:[
           Padding(
@@ -74,7 +70,7 @@ class _CodeScreenState extends State<CodeScreen> {
           'We have sent the code to create \n Your account to mobile number',
         style: TextStyle(
         fontSize:18,
-        //color: Color.fromRGBO(206, 142, 142, 1)
+        color: Color.fromRGBO(26, 26, 26, 1)
           ),
           textAlign: TextAlign.center,
           ),
@@ -89,15 +85,33 @@ class _CodeScreenState extends State<CodeScreen> {
               textAlign: TextAlign.center,
               ),
               
+              const SizedBox(height: 30,),
+               ///pin code textField
+            PinCodeTextField(
+              separatorBuilder: (context, index) => SizedBox(width:0,),
+              appContext: context,
+              length:6, // You can change the length of the pin code
+              onChanged: (value) {
+
+              },
+              controller: pinController,
+              keyboardType: TextInputType.number,
+              animationType: AnimationType.fade,
+              animationDuration:const Duration(milliseconds: 200),
+              pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(0),
+                fieldHeight: 40,
+                fieldWidth: 40,
+                activeFillColor: Colors.white,
+                selectedColor:const Color.fromRGBO(26, 26, 26, 1),
+                inactiveColor: Colors.black38,
+                //errorBorderColor: Color.fromRGBO(26, 26, 26, 1)
+              ),
+            ),   
                
-                  
   
-   
-
-
-
-
-           const SizedBox(height: 20,),
+           const SizedBox(height: 10,),
                resendtime==0? InkWell(
                 child: Text('Resend code', style:TextStyle(
                     color: Colors.grey[400]
@@ -141,8 +155,6 @@ class _CodeScreenState extends State<CodeScreen> {
                ),
            ),
          ),
-          ),
-        ),
       );
    }
 }

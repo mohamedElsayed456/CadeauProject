@@ -55,6 +55,23 @@ class AuthServices {
         return response;
         // print(response);
      }
+
+     //verify authentication code
+  Future<http.Response> verifyOtpServices({
+    required String verificationCode,
+    }) async {
+    Map<String, String>? headers = {
+      'Content-Type': 'application/json',
+      'Accept-Language': 'en',
+      'Timezone': 'Cairo',
+    };
+    final http.Response response = await http.post(
+        Uri.parse('${Environment.baseUrl}${Endpoints.verifyCode}'),
+        headers: headers
+        );
+        print(response);
+        return response;
+  }
   }   
     
 
