@@ -1,44 +1,26 @@
+import 'package:demo_project/repo/auth_repo.dart';
 import 'package:flutter/material.dart';
 
 
 class PhoneVerificationProvider extends ChangeNotifier{
-  String? phoneNumber;
-  String? verificationCode;
-  bool isCodeSent = false ;
 
-  //  Future<void> sendVerificationCode() async{
-  //    final response = await http.post(
-  //     Uri.parse(Environment.sendVerificationCode),
-  //     body: {
-  //       'phoneNumber': phoneNumber,
-  //       },
-  //       headers: {
-  //         'Accept-Language': 'en',
-  //          'Timezone': 'cairo'
-  //       }
-  //   );
-  //    if (response.statusCode == 200) {
-  //     isCodeSent = true;
-  //     notifyListeners();
-  //   }
-  //  }
+bool _isloading = false;
+  bool get isloading => _isloading;
+  void setIsloading(bool val) {
+    _isloading = val;
+    notifyListeners();
+  }
 
+final authRepo = AuthRepo();
+
+  Future<void> sendCode(
+    String countryCode,
+    String phoneNumber,
    
-  // Future<void> verifyCode() async {
-  //   final response = await http.post(
-  //     Uri.parse(Environment.sendVerificationCode),
-  //     body: {
-  //       'phoneNumber': phoneNumber,
-  //       'verificationCode': verificationCode,
-  //       },
-  //   );
+    ) async {
+    await authRepo.sendCode(countryCode,phoneNumber);
+    notifyListeners();
+  }
 
-  //   if (response.statusCode == 200) {
-  //     // Code verification successful, do something
-  //   } else {
-  //     // Code verification failed, handle error
-  //   }
-  // }
-
-    //
+ 
 }

@@ -38,18 +38,19 @@ class AuthRepo {
   }
 
  
-  Future<bool> verifyOtpRepo ({required String otp})async{
-    
-   final response=await authService.verifyOtpServices(verificationCode:otp);
-   if(response.statusCode==200){
-    // ignore: unused_local_variable
-    final Map<String,dynamic>extractedData=jsonDecode(response.body);
-    return true;
-
-   }
-   else{
-    return false;
+   Future<bool?> sendCode(
+    String phoneNumber,
+    String countryCode,
+    ) async {
+   final response= await authService.sendCode(phoneNumber,countryCode);
+     if(response.statusCode==200){
+          print ('mohamed');
+          print(response);
+    } else {
+      // Handle error
+      print('Error sending code: ${response.statusCode}');
+      return false;
     }
-    
+     return null;
   }
 }

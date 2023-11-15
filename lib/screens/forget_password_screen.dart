@@ -1,21 +1,31 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:demo_project/providers/phone_verification_provider.dart';
+import 'package:demo_project/repo/auth_repo.dart';
 import 'package:demo_project/screens/code_screen.dart';
 import 'package:demo_project/shared/components/components.dart';
 import'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
-class ForgotPasswordScreen extends StatelessWidget{
-   ForgotPasswordScreen({super.key,});
 
+// ignore: must_be_immutable
+class ForgotPasswordScreen extends StatefulWidget{
+   const ForgotPasswordScreen({super.key,});
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final formkey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
-  String? selectedCode;
+  String selectedCountryCode = '+20';
+  late final forgotVerificationProvider = context.read<PhoneVerificationProvider>();
+
 
 
   @override
   Widget build(BuildContext context){
+    
     return Scaffold(
       appBar: AppBar(
        leading: IconButton(
@@ -25,8 +35,7 @@ class ForgotPasswordScreen extends StatelessWidget{
           icon:const Icon(Icons.arrow_back_ios,size: 20,),
           ),
       ),
-      body:Consumer<PhoneVerificationProvider>(
-        builder: (context, phoneVerificationProvider, child) =>SingleChildScrollView(
+      body:SingleChildScrollView(
           child: Column(
             children:[
               Padding(
@@ -64,24 +73,27 @@ class ForgotPasswordScreen extends StatelessWidget{
                                      
                 Row(
                   children:[
-                    Expanded(
+                     Expanded(
                     child: CountryCodePicker(
+                       onChanged: (CountryCode code) {
+                      selectedCountryCode = code.dialCode ?? '';
+                    },
                        showFlag:false,
                        alignLeft: true,
-                       initialSelection: selectedCode,
+                       initialSelection: selectedCountryCode,
                        closeIcon:const Icon(Icons.backspace_sharp,color: Colors.grey,),
                         
-                 ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller:phoneController,
-                    onChanged: (value) {
-                     phoneVerificationProvider.phoneNumber = value;
-                      },
-                    validator: (value){
+                    ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        controller:phoneController,
+                        onChanged: (value) {
+                        
+                          },
+                     validator: (value){
                       if (value == null || value.isEmpty){
                         return 'Please enter your phone number';
                         }
@@ -89,7 +101,7 @@ class ForgotPasswordScreen extends StatelessWidget{
                       },
                     decoration:const InputDecoration(
                      border: UnderlineInputBorder(),
-                    hintText: 'Ex: 1274565461',
+                    hintText: 'Ex:1274565461',
                       hintStyle: TextStyle (
                       color: Colors.grey,
                       fontSize:14,
@@ -104,38 +116,56 @@ class ForgotPasswordScreen extends StatelessWidget{
              SizedBox(
               height: 56,
               width: double.infinity,
-              child: ElevatedButton(
-               onPressed: ()async{
-                  if(formkey.currentState!.validate()){
-                     // ignore: use_build_context_synchronously
-                     navigateTo(context, CodeScreen(
-                      phoneNumber: phoneController.text,
-                      ),
-                      );
-                     
-                 }
-                },
+              child:Selector<PhoneVerificationProvider, bool>(
+                  selector: (ctx, provider) => provider.isloading,
+                  builder: (context, isloading, _){
+                  return  ElevatedButton(
+                  onPressed: ()async{
+                      isloading ? {} : sendCode();
+
+                   },
                    style:ElevatedButton.styleFrom(
                       shape:const BeveledRectangleBorder(),
                        backgroundColor: Colors.grey[200],
                      ),
-                  child:const Text(
-                    'Next',
+                  child:isloading
+                    ?const CircularProgressIndicator(color:Colors.white,)
+                    :const Text(
+                      'Next',
                       style:TextStyle(
                        color: Colors.white,
                         fontSize: 18,
                       ),
                     ),
-                   ),
-                 ),
+                   );
+                  }
+                  )
+                 )
                 ],
                ),
               ),
             ),       
-            ], 
-                   ),
+          ], 
+           ),
           ),
-        ) ,
       );
      }
-}
+
+   Future<void>sendCode()async{
+    if(formkey.currentState!.validate()){
+       AuthRepo authRepo = AuthRepo();
+     forgotVerificationProvider.setIsloading(true);
+      // Validate phone number input
+      String phoneNumber = phoneController.text.trim();
+      String countryCode = selectedCountryCode;
+      final success = await authRepo.sendCode(phoneNumber,countryCode);
+      forgotVerificationProvider.setIsloading(false);
+      if(success==success){
+       // ignore:use_build_context_synchronously
+       navigateTo(context,CodeScreen(phoneNumber: phoneNumber,countryCode: countryCode,));
+      } else {
+        
+     }
+    }  
+   }
+  }

@@ -82,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: CountryCodePicker(
+                            child: CountryCodePicker(  
+                              initialSelection: '+20',
                               alignLeft: true,
                               showFlag: false,
                               onChanged: (value) => loginProvider.updateCountryCode(value.toString()),
@@ -196,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Spacer(),
                           TextButton(
                             onPressed: () {
-                              navigateTo(context, ForgotPasswordScreen());
+                              navigateTo(context,const ForgotPasswordScreen());
                             },
                             child: const Text(
                               'Forget password ?',

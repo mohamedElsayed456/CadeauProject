@@ -57,20 +57,27 @@ class AuthServices {
      }
 
      //verify authentication code
-  Future<http.Response> verifyOtpServices({
-    required String verificationCode,
-    }) async {
-    Map<String, String>? headers = {
-      'Content-Type': 'application/json',
-      'Accept-Language': 'en',
-      'Timezone': 'Cairo',
+    Future<http.Response> sendCode(
+    String phoneNumber,
+    String countryCode,
+    ) async {
+      Map<String, dynamic> body = {
+      "user": {
+        'country_code':countryCode, 
+        'phone_number': phoneNumber,
+       },
+      };
+       Map<String, String>? headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Accept-Language": 'en',
     };
     final http.Response response = await http.post(
-        Uri.parse('${Environment.baseUrl}${Endpoints.verifyCode}'),
-        headers: headers
-        );
-        print(response);
-        return response;
+      Uri.parse('${Environment.baseUrl}${Endpoints.forgetPassword}'),
+      body:jsonEncode(body),
+      headers:headers,
+    );
+     return response;
   }
   }   
     
