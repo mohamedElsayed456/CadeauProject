@@ -25,10 +25,11 @@ class ProductsDetailsScreen extends StatefulWidget{
 
   @override
   Widget build(BuildContext context){
-    final provider =Provider.of<ProductsDetailsProvider>(context);
      return Scaffold(
 
-    body:provider.isloading?getLoadingUi()
+    body:Selector<ProductsDetailsProvider,bool>(
+        selector:(context, provider) =>provider.isloading,
+          builder:(context, isloading, _)=> isloading?getLoadingUi()
        :Selector<ProductsDetailsProvider,ProductsDetailsModel>(
         selector:(context, provider) =>provider.product,
         builder:(context, model, _){
@@ -87,13 +88,13 @@ class ProductsDetailsScreen extends StatefulWidget{
                      ),
                      const SizedBox(height: 15,),
                      Row(
-                    children:[
+                      children:[
                       Text(
                         'SAR ${model.priceAfterDiscount.toString()}',
                         style:const TextStyle(
-                        color: Color.fromRGBO(26, 26, 26, 1),
+                        color: Color.fromRGBO(26,26,26,1),
                         fontSize:20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight:FontWeight.bold,
                       ),
                       ),
                       const SizedBox(width: 3,),
@@ -133,6 +134,7 @@ class ProductsDetailsScreen extends StatefulWidget{
         );
     }
    )
+  )
  );
  }
 }

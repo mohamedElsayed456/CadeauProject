@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 
 
 class OccasionsProvider extends ChangeNotifier {
- bool _isLoading = false;
-bool get isLoading => _isLoading;
+bool _isloading = false;
+  bool get isloading => _isloading;
+  void setIsloading(bool val) {
+    _isloading = val;
+    notifyListeners();
+  }
  
 
   List<OccasionsModel>occModel = [];
   final occasionRepo = OccasionRepo();
 
   Future<void>occProvider()async{
-      _isLoading=true;
+      _isloading=true;
       notifyListeners();
     final occList = await occasionRepo.occasion();
      occModel=occList!;
-    _isLoading=false;
+    _isloading=false;
     notifyListeners();
 
   }

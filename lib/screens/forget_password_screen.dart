@@ -21,7 +21,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String selectedCountryCode = '+20';
   late final forgotVerificationProvider = context.read<PhoneVerificationProvider>();
 
-
+ @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context){

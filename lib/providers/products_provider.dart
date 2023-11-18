@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 
 class ProductsProvider extends ChangeNotifier{
  
-bool _isLoading = false;
-bool get isLoading => _isLoading;
+bool _isloading = false;
+  bool get isloading => _isloading;
+  void setIsloading(bool val) {
+    _isloading = val;
+    notifyListeners();
+  }
 
   List<ProductsModel>proModel=[];
   final productRepo = ProductsRepo();
 
   Future<void>productListProvider(int productId)async{
-     _isLoading=true;
+     _isloading=true;
      notifyListeners();
     final proList = await productRepo.product(productId);
      proModel=proList!;
-    _isLoading=false;
+    _isloading=false;
     notifyListeners();
 
   }

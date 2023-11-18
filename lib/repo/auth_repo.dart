@@ -15,8 +15,7 @@ class AuthRepo {
         code: code, phoneNumber: phoneNumber, password: password);
     if (response.statusCode == 200) {
       final Map<String, dynamic> extractedData = jsonDecode(response.body);
-      // ignore: unused_local_variable
-      LoginModel model = LoginModel.fromJson(extractedData['data']['user']);
+       LoginModel.fromJson(extractedData['data']['user']);
       return true;
     }else{
       return false;
@@ -29,7 +28,7 @@ class AuthRepo {
     final response=await authService.logout();
     if(response.statusCode==200){
         // ignore: unused_local_variable
-        final Map<String,dynamic>extractedData = jsonDecode(response.body);
+         jsonDecode(response.body);
         return true;
     }
     else{

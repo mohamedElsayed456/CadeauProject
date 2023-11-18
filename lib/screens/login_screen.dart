@@ -24,14 +24,21 @@ class _LoginScreenState extends State<LoginScreen> {
   late final loginProvider = context.read<LoginProvider>();
 
   @override
-  Widget build(BuildContext context) {
+  void dispose(){
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(
           Icons.arrow_back_ios,
           size: 20,
         ),
-        actions: [
+        actions:[
           IconButton(
               onPressed: () {
                 navigateandfinish(context, HomeLayoutScreen());
@@ -80,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
       
                       Row(
-                        children: [
+                        children:[
                           Expanded(
                             child: CountryCodePicker(  
                               initialSelection: '+20',

@@ -4,17 +4,22 @@ import 'package:flutter/material.dart';
 
 
 class ProductsDetailsProvider extends ChangeNotifier{
-  bool isloading = false;
+  bool _isloading = false;
+  bool get isloading => _isloading;
+  void setIsloading(bool val) {
+    _isloading = val;
+    notifyListeners();
+  }
 
    ProductsDetailsModel product = ProductsDetailsModel();
      final productDetailsRepo=ProductsDetailsRepo();
 
     Future<void> productDetailsProvider(int id)async{
-    isloading=true;
+    _isloading=true;
     notifyListeners();
     final productDetails=await productDetailsRepo.getProductsDetails(id);
     product=productDetails!;
-    isloading=false;
+    _isloading=false;
     notifyListeners();
   } 
   

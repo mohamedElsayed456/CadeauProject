@@ -30,7 +30,6 @@ class ProductsScreen extends StatefulWidget{
 
   @override
   Widget build(BuildContext context){
-    final provider = Provider.of<ProductsProvider>(context);
      return Scaffold(
       appBar: AppBar(
       title:Text(
@@ -43,7 +42,9 @@ class ProductsScreen extends StatefulWidget{
      ],
      ),
      
-     body:provider.isLoading?getLoadingUi():
+     body:Selector<ProductsProvider,bool>(
+        selector:(context, provider) =>provider.isloading,
+          builder:(context, isloading, _)=> isloading?getLoadingUi():
        Selector<ProductsProvider,List<ProductsModel>>(
         selector: (context, provider) => provider.proModel,
         builder:(context, model, _) =>Padding(
@@ -131,6 +132,7 @@ class ProductsScreen extends StatefulWidget{
         ),
        ),
       ),
+      )
      );
      } 
   }
