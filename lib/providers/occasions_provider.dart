@@ -15,14 +15,9 @@ bool _isloading = false;
   List<OccasionsModel>occModel = [];
   final occasionRepo = OccasionRepo();
 
-  Future<void>occProvider()async{
-      _isloading=true;
-      notifyListeners();
-    final occList = await occasionRepo.occasion();
-     occModel=occList!;
-    _isloading=false;
-    notifyListeners();
-
+  void updateOccasionList(List<OccasionsModel>value){
+    occModel=value;
+     notifyListeners();
   }
 
   int currentIndex=0;
@@ -30,6 +25,4 @@ bool _isloading = false;
     currentIndex = index;
     notifyListeners();
    }
-   
-
-}
+  }

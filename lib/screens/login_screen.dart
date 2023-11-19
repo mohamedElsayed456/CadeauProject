@@ -38,13 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
           Icons.arrow_back_ios,
           size: 20,
         ),
-        actions:[
-          IconButton(
-              onPressed: () {
-                navigateandfinish(context, HomeLayoutScreen());
-              },
-              icon:const Icon(Icons.home)),
-        ],
+        // actions:[
+        //   IconButton(
+        //       onPressed: () {
+        //         navigateandfinish(context, HomeLayoutScreen());
+        //       },
+        //       icon:const Icon(Icons.home)),
+        // ],
       ),
       body:SingleChildScrollView(
         child: Column(

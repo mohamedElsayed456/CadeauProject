@@ -2,6 +2,7 @@
 //https://youtu.be/M0Gs1aJniv0?si=yENGp6R3FJ5lW_Nw
 import 'package:demo_project/models/products_model.dart';
 import 'package:demo_project/providers/products_provider.dart';
+import 'package:demo_project/repo/products_repo.dart';
 import 'package:demo_project/screens/products_details_screen.dart';
 import 'package:demo_project/shared/components/components.dart';
 import 'package:demo_project/widgets/top_offer_container.dart';
@@ -20,12 +21,12 @@ class ProductsScreen extends StatefulWidget{
   State<ProductsScreen> createState()=>_ProductsScreenState();
  }
  class _ProductsScreenState extends State<ProductsScreen>{
+     late final productProvider=context.read<ProductsProvider>();
+
    @override
   void initState(){
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp){
-      Provider.of<ProductsProvider>(context, listen: false).productListProvider(widget.id);
-    });
+    _productList();
   }
 
   @override
@@ -135,4 +136,13 @@ class ProductsScreen extends StatefulWidget{
       )
      );
      } 
+     
+  Future<void> _productList() async {
+    ProductsRepo productRepo = ProductsRepo();
+    productProvider.setIsloading(true);
+    List<ProductsModel>? model =await productRepo.product(widget.id);
+        // ignore: use_build_context_synchronously
+        context.read<ProductsProvider>().updateProductList(model??[]);
+        productProvider.setIsloading(false);
+   }  
   }

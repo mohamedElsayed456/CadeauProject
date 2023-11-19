@@ -1,5 +1,6 @@
 import 'package:demo_project/models/occasion_model.dart';
 import 'package:demo_project/providers/occasions_provider.dart';
+import 'package:demo_project/repo/occasion_repo.dart';
 import 'package:demo_project/screens/products_screen.dart';
 import 'package:demo_project/shared/components/components.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,12 @@ class OccasionScreen extends StatefulWidget{
 
 class _OccasionScreenState extends State<OccasionScreen> {
 
+  late final occasionProvider = context.read<OccasionsProvider>();
+
  @override
-  void initState() {
+  void initState(){
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<OccasionsProvider>(context, listen: false).occProvider();
-    });
+    _occasionList();
   }
 
    @override
@@ -150,6 +151,15 @@ class _OccasionScreenState extends State<OccasionScreen> {
            ),
       ),
    );
+  }
+  Future<void>_occasionList()async{
+    OccasionRepo occasionRepo =OccasionRepo();
+    occasionProvider.setIsloading(true);
+    List<OccasionsModel>? model =await occasionRepo.occasion();
+
+    // ignore: use_build_context_synchronously
+    context.read<OccasionsProvider>().updateOccasionList(model??[]);
+    occasionProvider.setIsloading(false);
   }
 }
 

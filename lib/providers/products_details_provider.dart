@@ -14,14 +14,10 @@ class ProductsDetailsProvider extends ChangeNotifier{
    ProductsDetailsModel product = ProductsDetailsModel();
      final productDetailsRepo=ProductsDetailsRepo();
 
-    Future<void> productDetailsProvider(int id)async{
-    _isloading=true;
+    void updateProductDetails(ProductsDetailsModel value){
+    product=value;
     notifyListeners();
-    final productDetails=await productDetailsRepo.getProductsDetails(id);
-    product=productDetails!;
-    _isloading=false;
-    notifyListeners();
-  } 
+   }
   
   
 }

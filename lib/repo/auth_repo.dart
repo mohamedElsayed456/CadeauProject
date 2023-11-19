@@ -27,7 +27,6 @@ class AuthRepo {
    Future<bool> logout()async{
     final response=await authService.logout();
     if(response.statusCode==200){
-        // ignore: unused_local_variable
          jsonDecode(response.body);
         return true;
     }

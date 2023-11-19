@@ -8,9 +8,9 @@ class OccasionRepo {
   Future<List<OccasionsModel>?>occasion()async{
    
    final response = await occasionService.occasion();
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
 
-       final Map<String, dynamic> extractedData = json.decode(response.body);
+        final Map<String, dynamic> extractedData = json.decode(response.body);
         final occasionData = extractedData['data']['occasion_types'];
 
         final List<OccasionsModel> occasionType = OccasionsModel.occaisonType(occasionData);
@@ -20,6 +20,5 @@ class OccasionRepo {
         else{
         return null;
        }
-
-  }
+    }
 }

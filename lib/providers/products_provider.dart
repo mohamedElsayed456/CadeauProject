@@ -14,13 +14,11 @@ bool _isloading = false;
   List<ProductsModel>proModel=[];
   final productRepo = ProductsRepo();
 
-  Future<void>productListProvider(int productId)async{
-     _isloading=true;
-     notifyListeners();
-    final proList = await productRepo.product(productId);
-     proModel=proList!;
-    _isloading=false;
+    
+    void updateProductList(List<ProductsModel> value){
+    proModel=value;
     notifyListeners();
-
+    
   }
+
 }

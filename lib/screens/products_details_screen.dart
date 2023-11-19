@@ -1,5 +1,6 @@
 import 'package:demo_project/models/products_details_model.dart';
 import 'package:demo_project/providers/products_details_provider.dart';
+import 'package:demo_project/repo/products_details_repo.dart';
 import 'package:demo_project/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +15,12 @@ class ProductsDetailsScreen extends StatefulWidget{
   State<ProductsDetailsScreen> createState()=>_ProductsDetailsScreenState();
  }
  class _ProductsDetailsScreenState extends State<ProductsDetailsScreen>{
+    late final productDetailsProvider = context.read<ProductsDetailsProvider>();
+
    @override
   void initState(){
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<ProductsDetailsProvider>(context, listen: false)
-          .productDetailsProvider(widget.id);
-    });
+   _productDetails();
   }
 
   @override
@@ -137,4 +137,15 @@ class ProductsDetailsScreen extends StatefulWidget{
   )
  );
  }
+    Future<void> _productDetails() async {
+    ProductsDetailsRepo productDetailsRepo = ProductsDetailsRepo();
+    productDetailsProvider.setIsloading(true);
+    ProductsDetailsModel? productDetails =await productDetailsRepo.getProductsDetails(widget.id);
+    if (productDetails != null) {
+      // ignore: use_build_context_synchronously
+      context.read<ProductsDetailsProvider>().updateProductDetails(productDetails);
+    
+    }
+      productDetailsProvider.setIsloading(false);
+  }
 }
