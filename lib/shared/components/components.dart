@@ -42,9 +42,9 @@ navigateandfinish (context,widget) => Navigator.pushAndRemoveUntil(context,Mater
       child:Column(
         mainAxisSize: MainAxisSize.min,
         children:[
-          CircularProgressIndicator(color: Colors.grey,),
+          CircularProgressIndicator(color: Colors.grey,strokeWidth:2,),
           SizedBox(height: 15,),
-          Text('Loading...'),
+          //Text('Loading...',),
         ],
       ),
     );

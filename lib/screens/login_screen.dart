@@ -38,19 +38,19 @@ class _LoginScreenState extends State<LoginScreen> {
           Icons.arrow_back_ios,
           size: 20,
         ),
-        // actions:[
-        //   IconButton(
-        //       onPressed: () {
-        //         navigateandfinish(context, HomeLayoutScreen());
-        //       },
-        //       icon:const Icon(Icons.home)),
-        // ],
+        actions:[
+          IconButton(
+              onPressed:(){
+                navigateandfinish(context, HomeLayoutScreen());
+            },
+            icon:const Icon(Icons.home)),
+         ],
       ),
       body:SingleChildScrollView(
-        child: Column(
-            children: [
+        child:Column(
+            children:[
               Column(
-                children: [
+                children:[
                   Image.asset('assets/images/logo.png'),
                   const SizedBox(
                     height: 30,
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               initialSelection: '+20',
                               alignLeft: true,
                               showFlag: false,
-                              onChanged: (value) => loginProvider.updateCountryCode(value.toString()),
+                              onChanged: (value) =>loginProvider.updateCountryCode(value.toString()),
                               closeIcon: const Icon(
                                 Icons.backspace_sharp,
                                 color: Colors.grey,
@@ -107,8 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: phoneController,
                               onChanged: (String value) =>
                                   loginProvider.updatePhoneNumber(value),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
+                              validator: (value){
+                                if (value == null || value.isEmpty){
                                   return 'Please enter your phone number';
                                 }
                                 return null;
@@ -261,10 +261,17 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } else {
-       Fluttertoast.showToast(
-          msg:'error',
+      Fluttertoast.showToast(
+          msg: 'Phone or password incorrect',
           backgroundColor: Colors.red,
         );
+      //  ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     backgroundColor: Colors.red,
+      //     duration: Duration(seconds: 3),
+      //     content:Text('Phone or password incorrect',style: TextStyle(color: Colors.red),),
+      //   ),
+      // );
       
     }
   }
