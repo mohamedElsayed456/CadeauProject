@@ -9,6 +9,7 @@ import 'package:demo_project/widgets/top_offer_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:tuple/tuple.dart';
 
 // ignore: must_be_immutable
 class ProductsScreen extends StatefulWidget{
@@ -43,20 +44,25 @@ class ProductsScreen extends StatefulWidget{
      ],
      ),
      
-     body:Selector<ProductsProvider,bool>(
-        selector:(context, provider) =>provider.isloading,
-          builder:(context, isloading, _)=> isloading?getLoadingUi():
-       Selector<ProductsProvider,List<ProductsModel>>(
-        selector: (context, provider) => provider.proModel,
-        builder:(context, model, _) =>Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children:[
-          Expanded(
-             child: TopOfferContainer(title:widget.title),
-          ),
-          
-          const SizedBox(height: 40,),
+    body:Selector<ProductsProvider,Tuple2<bool,List<ProductsModel>>>(
+      selector:(context, provider) =>Tuple2(provider.isloading,provider.proModel),
+        builder:(context,loadingandList, _){
+          final isLoading = loadingandList.item1;
+          final model = loadingandList.item2;
+
+          if(isLoading){
+            return getLoadingUi();
+          }
+          else{
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+               child: Column(
+                children:[
+                 Expanded(
+                 child: TopOfferContainer(title:widget.title),
+              ),
+              
+              const SizedBox(height: 40,),
 
            Expanded(
             flex:7,
@@ -128,13 +134,14 @@ class ProductsScreen extends StatefulWidget{
                     );
                   }
                 ),
-          ),
-         ],
-        ),
-       ),
-      ),
-      )
-     );
+               ),
+              ],
+             ),
+           );
+          }
+         }
+       )
+      );
      } 
      
   Future<void> _productList() async {

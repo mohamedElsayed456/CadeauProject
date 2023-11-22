@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -167,24 +168,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                       ),
                       //login
-                      Selector<LoginProvider,bool>(
-                        selector: (ctx, button) =>button.isButtonEnabled,
-                        builder: (context,buttonColor, child){
-                        return SizedBox(
-                          height: 56,
-                          width: double.infinity,
-                          child: Selector<LoginProvider, bool>(
-                              selector: (ctx, provider) => provider.isloading,
-                              builder: (context, isloading, _) {
-                                return ElevatedButton(
-                                  onPressed: () => isloading ? {} : _login(),
+                      Selector<LoginProvider,Tuple2<bool,bool>>(
+                        selector: (ctx, provider) =>Tuple2(provider.isButtonEnabled, provider.isloading),
+                        builder: (context,loadingandbuttonColor, child){
+                            final buttonColor = loadingandbuttonColor.item1;
+                            final isLoading = loadingandbuttonColor.item2;
+                            return SizedBox(
+                               height: 56,
+                               width: double.infinity,
+                                  child:ElevatedButton(
+                                  onPressed: () => isLoading ? {} : _login(),
                                   style: ElevatedButton.styleFrom(
                                     shape: const BeveledRectangleBorder(),
                                     backgroundColor:buttonColor
-                                        ? Colors.blue
-                                        : Colors.grey[200],
+                                      ? Colors.blue
+                                      : Colors.grey[200],
                                   ),
-                                  child: isloading
+                                  child: isLoading
                                       ? const CircularProgressIndicator(color:Colors.white,)
                                       : const Text(
                                           'Log in',
@@ -192,12 +192,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             color: Colors.white,
                                             fontSize: 18,
                                           ),
-                                        ),
+                                    ),
+                                  )
                                 );
                               }),
-                           );
-                         }
-                        ),
+                           
       
                       Row(
                         children: [

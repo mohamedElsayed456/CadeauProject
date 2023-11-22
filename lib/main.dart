@@ -1,4 +1,5 @@
 //https://github.com/mohamedElsayed456/CadeauProject.git
+//c:\Users\Hp\Documents\internprojects\demo_project
 import 'package:demo_project/providers/login_provider.dart';
 import 'package:demo_project/providers/logout_provider.dart';
 import 'package:demo_project/providers/occasions_provider.dart';
@@ -25,15 +26,13 @@ class MyApp extends StatelessWidget{
         ChangeNotifierProvider(create: (_)=>ProductsProvider()),
         ChangeNotifierProvider(create: (_)=>ProductsDetailsProvider()),
         ChangeNotifierProvider(create: (_)=>LogoutProvider()),
-
       ],
       builder:(context,child){
         
-        return MaterialApp(
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          
           colorScheme:ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3:true,
         ),

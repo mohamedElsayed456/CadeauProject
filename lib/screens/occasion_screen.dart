@@ -5,6 +5,7 @@ import 'package:demo_project/screens/products_screen.dart';
 import 'package:demo_project/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class OccasionScreen extends StatefulWidget{
   const OccasionScreen({super.key});
@@ -37,13 +38,17 @@ class _OccasionScreenState extends State<OccasionScreen> {
           ],
         ),
           
-      body:Selector<OccasionsProvider,bool>(
-        selector:(context, provider) =>provider.isloading,
-          builder:(context, isloading, _)=> isloading?getLoadingUi()
-          :Selector<OccasionsProvider,List<OccasionsModel>>(
-          selector:(context, provider)=>provider.occModel,
-          builder:(context, model, _){
-          return Padding(
+      body:Selector<OccasionsProvider,Tuple2<bool,List<OccasionsModel>>>(
+        selector:(context, provider) =>Tuple2(provider.isloading,provider.occModel),
+          builder:(context,loadingandList, _){
+              final isLoading = loadingandList.item1;
+              final model = loadingandList.item2;
+
+              if(isLoading){
+                return getLoadingUi();
+              }
+              else{
+                return Padding (
             padding: const EdgeInsets.all(13.0),
             child: ListView.separated(
                   shrinkWrap: true,
@@ -148,10 +153,11 @@ class _OccasionScreenState extends State<OccasionScreen> {
             ),
           );
          }
-           ),
-      ),
-   );
-  }
+       }
+      )
+      );
+    }
+
   Future<void>_occasionList()async{
     OccasionRepo occasionRepo =OccasionRepo();
     occasionProvider.setIsloading(true);

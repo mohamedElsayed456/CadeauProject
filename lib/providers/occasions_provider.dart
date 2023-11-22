@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class OccasionsProvider extends ChangeNotifier {
 bool _isloading = false;
   bool get isloading => _isloading;
-  void setIsloading(bool val) {
+  void setIsloading(bool val){
     _isloading = val;
     notifyListeners();
   }
- 
+ List<OccasionsModel>occModel = [];
 
-  List<OccasionsModel>occModel = [];
-  final occasionRepo = OccasionRepo();
+  
+final occasionRepo = OccasionRepo();
 
   void updateOccasionList(List<OccasionsModel>value){
     occModel=value;

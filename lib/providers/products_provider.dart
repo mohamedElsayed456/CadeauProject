@@ -6,16 +6,16 @@ class ProductsProvider extends ChangeNotifier{
  
 bool _isloading = false;
   bool get isloading => _isloading;
-  void setIsloading(bool val) {
+  void setIsloading(bool val){
     _isloading = val;
     notifyListeners();
   }
+List<ProductsModel>proModel=[];
 
-  List<ProductsModel>proModel=[];
-  final productRepo = ProductsRepo();
+final productRepo = ProductsRepo();
 
     
-    void updateProductList(List<ProductsModel> value){
+ void updateProductList(List<ProductsModel> value){
     proModel=value;
     notifyListeners();
     

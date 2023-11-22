@@ -10,9 +10,9 @@ class ProductsDetailsProvider extends ChangeNotifier{
     _isloading = val;
     notifyListeners();
   }
-
    ProductsDetailsModel product = ProductsDetailsModel();
-     final productDetailsRepo=ProductsDetailsRepo();
+    
+   final productDetailsRepo=ProductsDetailsRepo();
 
     void updateProductDetails(ProductsDetailsModel value){
     product=value;
